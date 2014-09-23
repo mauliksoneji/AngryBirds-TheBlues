@@ -94,7 +94,10 @@ ClientMessageTable.java : a table that maintains all the client messages and its
 Artificial Intelligence Project
 
 ---------------------------------------------------------------------------------------------------------------------------------
+Strategy:
+===================
 1. Introduction
+===================
 
 The general framework to be adopted in the project is divided into two 
 
@@ -129,7 +132,7 @@ The Learning Part will be discussed at length in the later versions of the
 document.
 
 2. The Planning Part
-
+===================
 In this project, tree structure is proposed for mapping scenes of game 
 
 levels, where the nodes represent different material of solid objects. This state 
@@ -203,7 +206,7 @@ The above strategy introduces an appropriate and powerful feature space for
 all the possible targets.
 
 2.2 Feasibility
-
+===================
 The next step to our approach is to examine each node in terms of its 
 
 possibility to be reached. 
