@@ -148,7 +148,8 @@ public class TrajectoryPlanner {
         double scale = getSceneScale(slingshot);
         //System.out.println("scale " + scale);
         Point ref = getReferencePoint(slingshot);
-            
+        boolean horizontal =  myPlanner.isHorizontal(targetPoint);
+        System.out.println(horizontal+"............");
         double x = (targetPoint.x - ref.x) / scale;
         double y = -(targetPoint.y - ref.y) / scale;
         
@@ -188,12 +189,13 @@ public class TrajectoryPlanner {
                 bestError = error;
             }
         }
-//        if (bestError < 1000)
-//        {
-//            theta1 = actualToLaunch(theta1);
-//            // add launch points to the list
-//            pts.add(findReleasePoint(slingshot, theta1));
-//        }
+        if (bestError < 1000 )
+        {
+            theta1 = actualToLaunch(theta1);
+            // add launch points to the list
+            if(horizontal)
+            pts.add(findReleasePoint(slingshot, theta1));
+        }
         bestError = 1000;
         
         // search angles in range [t2 - BOUND, t2 + BOUND]
@@ -211,7 +213,7 @@ public class TrajectoryPlanner {
             
             // the error in y-coordinate
             double error = Math.abs(a*x*x + b*x - y);
-            if (error < bestError)
+            if (error < bestError )
             {
                 theta2 = theta;
                 bestError = error;
@@ -220,11 +222,11 @@ public class TrajectoryPlanner {
         
         theta2 = actualToLaunch(theta2);
         
-        //System.out.println("Two angles: " + Math.toDegrees(theta1) + ", " + Math.toDegrees(theta2));
+//        System.out.println("Two angles: " + Math.toDegrees(theta1) + ", " + Math.toDegrees(theta2));
             
         
         // add the higher point if it is below 75 degrees and not same as first
-        if (theta2 < Math.toRadians(75) && theta2 != theta1 && bestError < 1000)
+        if (theta2 < Math.toRadians(75) && theta2 != theta1 && bestError < 1000 && !horizontal)
             pts.add(findReleasePoint(slingshot, theta2));
         
         return pts;

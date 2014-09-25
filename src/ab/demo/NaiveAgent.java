@@ -54,7 +54,7 @@ public class NaiveAgent implements Runnable {
 	public void run() {
 
 		aRobot.loadLevel(currentLevel);
-        int count = 0;
+
 		while (true) {
 			GameState state = solve();
 			if (state == GameState.WON) {
@@ -79,11 +79,7 @@ public class NaiveAgent implements Runnable {
 							+ " Score: " + scores.get(key) + " ");
 				}
 				System.out.println("Total Score: " + totalScore);
-                count++;
-                if (count >= 8) {
-                    System.out.println("8 levels completed");
-                    break;
-                }
+
 				aRobot.loadLevel(++currentLevel);
 				// make a new trajectory planner whenever a new level is entered
 				tp = new TrajectoryPlanner();
@@ -165,6 +161,7 @@ public class NaiveAgent implements Runnable {
 						pig = pigs.get(i);
 
 					_tpt = pig.getCenter();// if the target is very close to before, randomly choose a
+                    //    System.out.println(pig.width+"///////////"+pig.height);
 					// point near it
 					if(_tpt.getY()<max)
 					{

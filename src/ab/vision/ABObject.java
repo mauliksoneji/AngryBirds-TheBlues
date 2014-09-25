@@ -29,7 +29,7 @@ public class ABObject extends Rectangle {
 //is Hollow or not
  public boolean hollow = false;
  
- 
+
 public ABObject(Rectangle mbr, ABType type) {
 	super(mbr);
 	this.type = type;
