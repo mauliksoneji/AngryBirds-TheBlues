@@ -48,9 +48,9 @@ public class myPlanner {
             {
                 sum_v +=  weight.get(block.type);
             }
-            System.out.println(block.area+"________area");
+//            System.out.println(block.area+"________area");
         }
-        System.out.println(sum_h+"~~~~~~~~~~~~~~~"+sum_v);
+  //      System.out.println(sum_h+"~~~~~~~~~~~~~~~"+sum_v);
         if(sum_h <= sum_v)
             return true;
         return false;

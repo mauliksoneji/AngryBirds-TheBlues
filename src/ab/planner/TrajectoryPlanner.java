@@ -149,7 +149,7 @@ public class TrajectoryPlanner {
         //System.out.println("scale " + scale);
         Point ref = getReferencePoint(slingshot);
         boolean horizontal =  myPlanner.isHorizontal(targetPoint);
-        System.out.println(horizontal+"............");
+      //  System.out.println(horizontal+"............");
         double x = (targetPoint.x - ref.x) / scale;
         double y = -(targetPoint.y - ref.y) / scale;
         
