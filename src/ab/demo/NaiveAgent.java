@@ -156,20 +156,51 @@ public class NaiveAgent implements Runnable {
 					ABObject pig = pigs.get(0);
 					Point fnl = pig.getCenter(),_tpt = pig.getCenter();
 					double max = _tpt.getY();
-					// random pick up a pig
-					for(int i=0;i<pigs.size();i++){
-						pig = pigs.get(i);
 
-					_tpt = pig.getCenter();// if the target is very close to before, randomly choose a
-                    //    System.out.println(pig.width+"///////////"+pig.height);
-					// point near it
-					if(_tpt.getY()<max)
-					{
-						max = _tpt.getY();
-						fnl = _tpt;
-					}
-					}
-					_tpt = fnl;
+                    ABObject activeBird;
+                    List<ABObject> birds = vision.findBirdsMBR();
+                    if (birds.isEmpty()) activeBird = null;
+                    else activeBird = birds.get(0);
+
+                    if(activeBird != null) {
+                        double min = Point.distance(sling.getCenterX(), sling.getCenterY(), activeBird.getCenterX(), activeBird.getCenterY());
+                        for (ABObject a_Bird : birds) {
+                            if (Point.distance(sling.getCenterX(), sling.getCenterY(), a_Bird.getCenterX(), a_Bird.getCenterY()) < min) {
+                                min = Point.distance(sling.getCenterX(), sling.getCenterY(), a_Bird.getCenterX(), a_Bird.getCenterY());
+                                activeBird = a_Bird;
+                            }
+                        }
+                    }
+                    if(activeBird!=null && !activeBird.getType().toString().equalsIgnoreCase("yellowbird")) {
+                        // pick a top most pig
+                        for (int i = 0; i < pigs.size(); i++) {
+                            pig = pigs.get(i);
+
+                            _tpt = pig.getCenter();// if the target is very close to before, randomly choose a
+                            //    System.out.println(pig.width+"///////////"+pig.height);
+                            // point near it
+                            if (_tpt.getY() < max) {
+                                max = _tpt.getY();
+                                fnl = _tpt;
+                            }
+                        }
+                        _tpt = fnl;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < pigs.size(); i++) {
+                            pig = pigs.get(i);
+
+                            _tpt = pig.getCenter();// if the target is very close to before, randomly choose a
+                            //    System.out.println(pig.width+"///////////"+pig.height);
+                            // point near it
+                            if (_tpt.getY() > max) {
+                                max = _tpt.getY();
+                                fnl = _tpt;
+                            }
+                        }
+                        _tpt = fnl;
+                    }
 					if (prevTarget != null && distance(prevTarget, _tpt) < 10) {
 						double _angle = randomGenerator.nextDouble() * Math.PI * 2;
 						_tpt.x = _tpt.x + (int) (Math.cos(_angle) * 10);

@@ -9,6 +9,13 @@
 *****************************************************************************/
 package ab.planner;
 
+import ab.demo.NaiveAgent;
+import ab.demo.findHills;
+import ab.demo.other.ActionRobot;
+import ab.demo.other.Shot;
+import ab.vision.ABObject;
+import ab.vision.Vision;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -148,8 +155,9 @@ public class TrajectoryPlanner {
         double scale = getSceneScale(slingshot);
         //System.out.println("scale " + scale);
         Point ref = getReferencePoint(slingshot);
-        boolean horizontal =  myPlanner.isHorizontal(targetPoint);
-      //  System.out.println(horizontal+"............");
+        boolean horizontal =  heuristic.isHorizontal(targetPoint);
+//        boolean isReachableThroughHills = reachable(targetPoint);
+//        System.out.println(NaiveAgent.isHill+"............isReachableThroughHills");
         double x = (targetPoint.x - ref.x) / scale;
         double y = -(targetPoint.y - ref.y) / scale;
         
@@ -231,8 +239,34 @@ public class TrajectoryPlanner {
         
         return pts;
     }
-   
-       
+
+//    private boolean reachable(Point target) {
+//        Vision vision = new Vision(ActionRobot.doScreenShot());
+//        Shot shot = NaiveAgent.shot;
+//        Point releasePoint = new Point(shot.getX() + shot.getDx(), shot.getY() + shot.getDy());
+//        System.out.println(releasePoint.toString()+"~~~~~~~~~~~~~~~~~~~");
+//        int traY = this.getYCoordinate(vision.findSlingshotMBR(), releasePoint, target.x);
+//        if (Math.abs(traY - target.y) > 100) {
+//            //System.out.println(Math.abs(traY - target.y));
+//            return false;
+//        }
+//        boolean result = true;
+//        java.util.List<Point> points = this.predictTrajectory(vision.findSlingshotMBR(), releasePoint);
+//        for (Point point : points) {
+//            if (point.x < 840 && point.y < 480 && point.y > 100 && point.x > 400)
+//                for (ABObject ab : vision.findHills()) {
+//                    if (
+//                            ((ab.contains(point) && !ab.contains(target)) || Math.abs(vision.getMBRVision()._scene[point.y][point.x] - 72) < 10)
+//                                    && point.x < target.x
+//                            )
+//                        return false;
+//                }
+//
+//        }
+//        return result;
+//    }
+
+
     /* the estimated tap time given the tap point
      *
      * @param   sling - bounding box of the slingshot
@@ -478,6 +512,6 @@ public class TrajectoryPlanner {
 		return getTimeByDistance(sling, release, tapPoint);
 		
 	}
-    
+
   
 }
