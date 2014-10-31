@@ -54,7 +54,7 @@ public class NaiveAgent implements Runnable {
 	public void run() {
 
 		aRobot.loadLevel(currentLevel);
-
+        int playing_times = 0;
 		while (true) {
 			GameState state = solve();
 			if (state == GameState.WON) {
@@ -81,15 +81,25 @@ public class NaiveAgent implements Runnable {
 				System.out.println("Total Score: " + totalScore);
 
 				aRobot.loadLevel(++currentLevel);
+                playing_times = 0;
 				// make a new trajectory planner whenever a new level is entered
 				tp = new TrajectoryPlanner();
 
 				// first shot on this level, try high shot first
 				firstShot = true;
-			} else if (state == GameState.LOST) {
-				System.out.println("Restart");
+			} else if (state == GameState.LOST && playing_times <2) {
+                playing_times++;
+				System.out.println("Restart :"+playing_times);
 				aRobot.restartLevel();
-			} else if (state == GameState.LEVEL_SELECTION) {
+			} else if (state == GameState.LOST) {
+                scores.put(currentLevel,0);
+                System.out.println("Skipping level");
+                aRobot.loadLevel(++currentLevel);
+                playing_times = 0;
+                tp = new TrajectoryPlanner();
+                firstShot = true;
+            }
+            else if (state == GameState.LEVEL_SELECTION) {
 				System.out
 				.println("Unexpected level selection page, go to the last current level : "
 						+ currentLevel);
